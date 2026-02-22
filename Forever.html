@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Forever?💕</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --blush: #f7c5c5;
+      --rose: #e87c8d;
+      --deep: #c0415a;
+      --cream: #fff5f7;
+      --mauve: #b56679;
+      --soft: #fde8ed;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      min-height: 100vh;
+      background: var(--cream);
+      font-family: 'Lato', sans-serif;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Floating hearts background */
+    .hearts-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .heart-float {
+      position: absolute;
+      font-size: 1.2rem;
+      opacity: 0.18;
+      animation: floatUp linear infinite;
+    }
+
+    @keyframes floatUp {
+      0%   { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+      10%  { opacity: 0.18; }
+      90%  { opacity: 0.18; }
+      100% { transform: translateY(-10vh) rotate(30deg); opacity: 0; }
+    }
+
+    /* Main content */
+    .container {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 2rem;
+    }
+
+    /* === SCREEN 1: Intro === */
+    #screen-intro {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 1.8rem;
+      animation: fadeIn 1.2s ease both;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .big-heart {
+      font-size: 5rem;
+      animation: heartbeat 1.4s ease-in-out infinite;
+      display: inline-block;
+    }
+
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      14%       { transform: scale(1.22); }
+      28%       { transform: scale(1); }
+      42%       { transform: scale(1.14); }
+      70%       { transform: scale(1); }
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      color: var(--deep);
+      line-height: 1.2;
+    }
+
+    h1 em {
+      font-style: italic;
+      color: var(--rose);
+    }
+
+    .subtitle {
+      font-size: 1.05rem;
+      color: var(--mauve);
+      max-width: 420px;
+      line-height: 1.7;
+      letter-spacing: 0.01em;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--rose), var(--deep));
+      color: white;
+      border: none;
+      padding: 0.9rem 2.4rem;
+      border-radius: 50px;
+      font-size: 1.05rem;
+      font-family: 'Lato', sans-serif;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      box-shadow: 0 6px 24px rgba(200, 65, 90, 0.28);
+      transition: transform 0.18s, box-shadow 0.18s;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px) scale(1.04);
+      box-shadow: 0 10px 32px rgba(200, 65, 90, 0.38);
+    }
+
+    /* === SCREEN 2: The Question === */
+    #screen-question {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 2rem;
+      animation: fadeIn 0.9s ease both;
+    }
+
+    .polaroid {
+      background: white;
+      padding: 1.4rem 1.4rem 2.8rem 1.4rem;
+      box-shadow: 0 8px 40px rgba(180,60,80,0.13);
+      transform: rotate(-2.5deg);
+      max-width: 320px;
+      position: relative;
+    }
+
+    .polaroid-inner {
+      width: 100%;
+      aspect-ratio: 1;
+      background: linear-gradient(135deg, var(--blush) 0%, var(--soft) 50%, var(--blush) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .polaroid-inner::before {
+      content: '♡';
+      position: absolute;
+      font-size: 9rem;
+      opacity: 0.07;
+      color: var(--deep);
+    }
+
+    .polaroid-caption {
+      position: absolute;
+      bottom: 0.9rem;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      color: var(--mauve);
+      font-size: 0.85rem;
+      letter-spacing: 0.04em;
+    }
+
+    .question-text {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      color: var(--deep);
+      line-height: 1.3;
+      max-width: 480px;
+    }
+
+    .question-text em {
+      color: var(--rose);
+      font-style: italic;
+    }
+
+    .small-note {
+      font-size: 0.85rem;
+      color: #c09aab;
+      letter-spacing: 0.04em;
+    }
+
+    /* YES / NO buttons */
+    .answer-row {
+      display: flex;
+      gap: 1.4rem;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 0.4rem;
+    }
+
+    #btn-yes {
+      background: linear-gradient(135deg, var(--rose), var(--deep));
+      color: white;
+      border: none;
+      padding: 1rem 2.6rem;
+      border-radius: 50px;
+      font-size: 1.2rem;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      cursor: pointer;
+      box-shadow: 0 6px 24px rgba(200, 65, 90, 0.30);
+      transition: transform 0.18s, box-shadow 0.18s;
+    }
+
+    #btn-yes:hover {
+      transform: scale(1.08) translateY(-3px);
+      box-shadow: 0 12px 36px rgba(200, 65, 90, 0.42);
+    }
+
+    #btn-no {
+      background: white;
+      color: var(--mauve);
+      border: 2px solid var(--blush);
+      padding: 0.85rem 2rem;
+      border-radius: 50px;
+      font-size: 0.95rem;
+      font-family: 'Lato', sans-serif;
+      cursor: pointer;
+      transition: all 0.2s;
+      position: relative;
+    }
+
+    /* === SCREEN 3: YES! === */
+    #screen-yes {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 1.6rem;
+      animation: fadeIn 0.8s ease both;
+    }
+
+    .confetti-row {
+      font-size: 2.2rem;
+      letter-spacing: 0.3rem;
+      animation: bounce 0.6s ease both;
+    }
+
+    @keyframes bounce {
+      0%   { transform: scale(0.4); opacity: 0; }
+      60%  { transform: scale(1.15); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .yes-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.2rem, 6vw, 3.8rem);
+      color: var(--deep);
+      line-height: 1.1;
+      animation: fadeIn 0.8s 0.3s ease both;
+      opacity: 0;
+    }
+
+    .yes-title em { color: var(--rose); }
+
+    .yes-message {
+      font-size: 1.05rem;
+      color: var(--mauve);
+      max-width: 420px;
+      line-height: 1.8;
+      animation: fadeIn 0.8s 0.6s ease both;
+      opacity: 0;
+    }
+
+    .rings {
+      font-size: 3.5rem;
+      animation: spin 3s ease-in-out infinite alternate, fadeIn 0.8s 0.9s ease both;
+      opacity: 0;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(-8deg) scale(1); }
+      to   { transform: rotate(8deg) scale(1.08); }
+    }
+
+    /* === SCREEN 4: NO (fun runaway) === */
+    #screen-no {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 1.4rem;
+      animation: fadeIn 0.6s ease both;
+    }
+
+    .no-emoji { font-size: 3.5rem; }
+
+    .no-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.5rem, 4vw, 2.4rem);
+      color: var(--deep);
+    }
+
+    .no-sub {
+      color: var(--mauve);
+      font-size: 1rem;
+      max-width: 380px;
+      line-height: 1.7;
+    }
+
+    .btn-retry {
+      background: linear-gradient(135deg, var(--rose), var(--deep));
+      color: white;
+      border: none;
+      padding: 0.8rem 2rem;
+      border-radius: 50px;
+      font-size: 1rem;
+      cursor: pointer;
+      font-family: 'Lato', sans-serif;
+      box-shadow: 0 4px 18px rgba(200,65,90,0.25);
+      transition: transform 0.18s;
+    }
+
+    .btn-retry:hover { transform: scale(1.05); }
+
+    /* Divider */
+    .divider {
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--blush), transparent);
+      margin: 0 auto;
+    }
+
+    /* Utility */
+    .hidden { display: none !important; }
+    .flex   { display: flex !important; }
+
+    /* Sparkle elements */
+    .sparkle {
+      position: fixed;
+      pointer-events: none;
+      font-size: 1.2rem;
+      animation: sparkle-pop 0.8s ease forwards;
+      z-index: 999;
+    }
+
+    @keyframes sparkle-pop {
+      0%   { transform: scale(0) translateY(0); opacity: 1; }
+      60%  { transform: scale(1.4) translateY(-30px); opacity: 1; }
+      100% { transform: scale(0) translateY(-60px); opacity: 0; }
+    }
+
+    /* NO button runaway on hover */
+    #btn-no.runaway {
+      transition: left 0s, top 0s;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Floating heart background -->
+<div class="hearts-bg" id="heartsBg"></div>
+
+<div class="container">
+
+  <!-- SCREEN 1: Welcome -->
+  <div id="screen-intro">
+    <div class="big-heart">💕</div>
+    <h1>Hey, you.<br><em>Yes, you.</em></h1>
+    <div class="divider"></div>
+    <p class="subtitle">
+      I have something very important to ask you.<br>
+      Something I've been thinking about for a while…
+    </p>
+    <button class="btn-primary" onclick="showQuestion()">I'm ready 💌</button>
+  </div>
+
+  <!-- SCREEN 2: The Question -->
+  <div id="screen-question">
+    <div class="polaroid">
+      <div class="polaroid-inner">
+        🌹
+      </div>
+      <div class="polaroid-caption">us, always</div>
+    </div>
+    <p class="question-text">
+      Will you be with me<br><em>forever?</em> 🥺
+    </p>
+    <p class="small-note">think very carefully before you answer…</p>
+    <div class="answer-row">
+      <button id="btn-yes" onclick="showYes()">Yes, forever 💍</button>
+      <button id="btn-no" onmouseenter="runAway(this)" onclick="handleNo()">No</button>
+    </div>
+  </div>
+
+  <!-- SCREEN 3: YES! -->
+  <div id="screen-yes">
+    <div class="confetti-row">🎊 💕 🎉 ✨ 💕 🎊</div>
+    <div class="rings">💍</div>
+    <h1 class="yes-title">Yes!<br><em>Forever it is.</em></h1>
+    <div class="divider"></div>
+    <p class="yes-message">
+      I knew it. 💕 You just made me the happiest person in the world.
+      I promise to love you every single day, through every season, every adventure — forever and always.
+    </p>
+    <div class="confetti-row" style="animation-delay:1.2s; opacity:0; animation: bounce 0.6s 1.2s ease both;">
+      🌹 🥂 🌸 💫 🌸 🥂 🌹
+    </div>
+  </div>
+
+  <!-- SCREEN 4: NO (reached after many attempts) -->
+  <div id="screen-no">
+    <div class="no-emoji">😤</div>
+    <h1 class="no-title">Seriously?!</h1>
+    <p class="no-sub">
+      You really can't say no to me and you know it. 
+      Go back and pick the right answer. I'll be waiting. 💕
+    </p>
+    <button class="btn-retry" onclick="showQuestion()">Okay fine… 💕</button>
+  </div>
+
+</div>
+
+<script>
+  // Generate floating background hearts
+  const heartsBg = document.getElementById('heartsBg');
+  const heartChars = ['❤️','💕','💗','💓','🌸','✨','💖','💝'];
+
+  for (let i = 0; i < 22; i++) {
+    const h = document.createElement('span');
+    h.className = 'heart-float';
+    h.textContent = heartChars[Math.floor(Math.random() * heartChars.length)];
+    h.style.left = Math.random() * 100 + 'vw';
+    h.style.fontSize = (0.8 + Math.random() * 1.4) + 'rem';
+    h.style.animationDuration = (8 + Math.random() * 14) + 's';
+    h.style.animationDelay = (-Math.random() * 14) + 's';
+    heartsBg.appendChild(h);
+  }
+
+  // Sparkle on click
+  document.addEventListener('click', function(e) {
+    const emojis = ['✨','💕','🌸','💗','⭐'];
+    const el = document.createElement('span');
+    el.className = 'sparkle';
+    el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    el.style.left = (e.clientX - 12) + 'px';
+    el.style.top  = (e.clientY - 12) + 'px';
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 900);
+  });
+
+  function showScreen(id) {
+    ['screen-intro','screen-question','screen-yes','screen-no'].forEach(s => {
+      document.getElementById(s).style.display = 'none';
+    });
+    const el = document.getElementById(id);
+    el.style.display = 'flex';
+    el.style.animation = 'none';
+    void el.offsetWidth;
+    el.style.animation = '';
+  }
+
+  function showQuestion() {
+    noCount = 0;
+    showScreen('screen-question');
+    // Reset NO button
+    const btn = document.getElementById('btn-no');
+    btn.style.position = '';
+    btn.style.left = '';
+    btn.style.top = '';
+    btn.textContent = 'No';
+  }
+
+  function showYes() {
+    showScreen('screen-yes');
+    launchHearts();
+  }
+
+  let noCount = 0;
+
+  function runAway(btn) {
+    noCount++;
+    if (noCount > 6) { return; }
+    const row = btn.parentElement;
+    const rowRect = row.getBoundingClientRect();
+    const btnRect = btn.getBoundingClientRect();
+
+    // Make absolute positioned
+    if (!btn.style.position) {
+      btn.style.position = 'fixed';
+      btn.style.left = btnRect.left + 'px';
+      btn.style.top  = btnRect.top  + 'px';
+    }
+
+    const maxX = window.innerWidth - 100;
+    const maxY = window.innerHeight - 60;
+    let newX = Math.random() * maxX;
+    let newY = Math.random() * maxY;
+
+    btn.style.transition = 'left 0.25s, top 0.25s';
+    btn.style.left = newX + 'px';
+    btn.style.top  = newY + 'px';
+
+    // Tease messages
+    const msgs = ['No?','Really?','You sure?','Think again…','Last chance!','…no?','Okay fine 😭'];
+    btn.textContent = msgs[Math.min(noCount - 1, msgs.length - 1)];
+  }
+
+  function handleNo() {
+    if (noCount > 5) {
+      showScreen('screen-no');
+    }
+  }
+
+  function launchHearts() {
+    const emojis = ['💕','💗','💖','🌸','✨','💝','🎊','💍','🌹'];
+    for (let i = 0; i < 30; i++) {
+      setTimeout(() => {
+        const el = document.createElement('span');
+        el.className = 'sparkle';
+        el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        el.style.left = (Math.random() * window.innerWidth) + 'px';
+        el.style.top  = (Math.random() * window.innerHeight) + 'px';
+        el.style.fontSize = (1 + Math.random() * 2) + 'rem';
+        el.style.animationDuration = (0.8 + Math.random() * 0.8) + 's';
+        document.body.appendChild(el);
+        setTimeout(() => el.remove(), 1200);
+      }, i * 80);
+    }
+  }
+</script>
+</body>
+</html>
